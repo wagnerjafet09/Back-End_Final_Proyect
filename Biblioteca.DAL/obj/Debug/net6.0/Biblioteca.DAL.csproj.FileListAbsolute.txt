@@ -1,0 +1,12 @@
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\bin\Debug\net6.0\Biblioteca.DAL.deps.json
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\bin\Debug\net6.0\Biblioteca.DAL.dll
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\bin\Debug\net6.0\Biblioteca.DAL.pdb
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.csproj.AssemblyReference.cache
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.AssemblyInfoInputs.cache
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.AssemblyInfo.cs
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.csproj.CoreCompileInputs.cache
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.dll
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\refint\Biblioteca.DAL.dll
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\Biblioteca.DAL.pdb
+C:\projects\Biblioteca\Bibioteca\Biblioteca.DAL\obj\Debug\net6.0\ref\Biblioteca.DAL.dll

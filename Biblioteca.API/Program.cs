@@ -18,8 +18,10 @@ builder.Services.AddDbContext<BibliotecaContext>(options => options.UseSqlServer
 
 //Repositories
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<ILibroRepository, LibroRepository>();
 //Services
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<ILibroService, LibroService>();
 
 var app = builder.Build();
 

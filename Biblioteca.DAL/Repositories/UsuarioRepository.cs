@@ -4,11 +4,6 @@ using Biblioteca.DAL.Entities;
 using Biblioteca.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.DAL.Repositories
 {
@@ -23,9 +18,32 @@ namespace Biblioteca.DAL.Repositories
             this.logger = logger;
         }
 
-        public override Task<List<Usuario>> GetAll()
+        public override async Task<List<Usuario>> GetAll()
         {
-            return base.GetAll();
+
+            List<Usuario> usuarios = new List<Usuario>();
+            try
+            {
+                usuarios = await base.GetAll();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrio un error Obteniendo los usuarios {ex.Message}");
+            }
+            return usuarios;
+        }
+        public override async Task<Usuario> GetByID(int id)
+        {
+            Usuario usuario = new Usuario();
+            try
+            {
+                usuario = await base.GetByID(id);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrio un error Obteniendo el usuario {ex.Message}");
+            }
+            return usuario;
         }
 
         public async Task<bool> RegistroUsuario(Usuario usuarios)
@@ -48,7 +66,7 @@ namespace Biblioteca.DAL.Repositories
             Usuario loginexitoso = new Usuario();
             if (loginRequest.Nombre != null && loginRequest.Contraseña != null)
             {
-                var usuarios = await context.Usuarios.FirstOrDefaultAsync(U => U.Nombre == loginRequest.Nombre && U.Contraseña == loginRequest.Contraseña);
+                var usuarios = await context.Usuarios.FirstOrDefaultAsync(U => U.NombreUsuario == loginRequest.NombreUsuario && U.Contraseña == loginRequest.Contraseña);
 
                 if (usuarios != null)
                 {

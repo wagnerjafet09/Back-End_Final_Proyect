@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Biblioteca.DAL.Entities
 {
@@ -19,6 +15,5 @@ namespace Biblioteca.DAL.Entities
         public string? UrlImagen { get; set; }
         public bool? Eliminado { get; set; }
         public InventarioLibro InvetarioLibro { get; set; }
-
     }
 }

@@ -1,4 +1,7 @@
-﻿using Biblioteca.DAL.Interfaces;
+﻿using Biblioteca.BL.Contract;
+using Biblioteca.BL.Core;
+using Biblioteca.BL.Dto.Usuario;
+using Biblioteca.DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,44 +12,51 @@ namespace Biblioteca.API.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository usuarioRepository;
+        private readonly IUsuarioService usuarioService;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository)
+        public UsuarioController(IUsuarioService usuarioService)
         {
-            this.usuarioRepository = usuarioRepository;
+            this.usuarioService = usuarioService;
         }
 
-        // GET: api/<UsuarioController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await this.usuarioRepository.GetAll();
+            var result = await this.usuarioService.GetAll();
+            return Ok(result);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await this.usuarioService.GetById(id);
             return Ok(result);
         }
 
-        // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("Registro")]
+        public async Task<IActionResult> Registro(UsuarioResgistroDto usuarioResgistroDto)
         {
-            return "value";
+            if (usuarioResgistroDto != null)
+            {
+                var result = await this.usuarioService.RegistroUsuario(usuarioResgistroDto);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-
-        // POST api/<UsuarioController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("InicioDeSesion")]
+        public async Task<IActionResult> InicioSesion(UsuarioLoginDto usuarioLoginDto)
         {
-        }
-
-        // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UsuarioController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (usuarioLoginDto != null)
+            {
+                var result = await this.usuarioService.LoginUsuario(usuarioLoginDto);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

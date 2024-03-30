@@ -822,6 +822,19 @@
           }
         }
       },
+      "Biblioteca.BL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Biblioteca.DAL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Biblioteca.BL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Biblioteca.BL.dll": {}
+        }
+      },
       "Biblioteca.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2338,6 +2351,11 @@
         "version.txt"
       ]
     },
+    "Biblioteca.BL/1.0.0": {
+      "type": "project",
+      "path": "../Biblioteca.BL/Biblioteca.BL.csproj",
+      "msbuildProject": "../Biblioteca.BL/Biblioteca.BL.csproj"
+    },
     "Biblioteca.DAL/1.0.0": {
       "type": "project",
       "path": "../Biblioteca.DAL/Biblioteca.DAL.csproj",
@@ -2346,24 +2364,30 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Biblioteca.BL >= 1.0.0",
       "Biblioteca.DAL >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\waner\\.nuget\\packages\\": {}
+    "C:\\Users\\MSI GL65\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.API\\Biblioteca.API.csproj",
+      "projectUniqueName": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.API\\Biblioteca.API.csproj",
       "projectName": "Biblioteca.API",
-      "projectPath": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.API\\Biblioteca.API.csproj",
-      "packagesPath": "C:\\Users\\waner\\.nuget\\packages\\",
-      "outputPath": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.API\\obj\\",
+      "projectPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.API\\Biblioteca.API.csproj",
+      "packagesPath": "C:\\Users\\MSI GL65\\.nuget\\packages\\",
+      "outputPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\waner\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MSI GL65\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2377,8 +2401,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {
-              "projectPath": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj"
+            "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.BL\\Biblioteca.BL.csproj": {
+              "projectPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.BL\\Biblioteca.BL.csproj"
+            },
+            "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {
+              "projectPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj"
             }
           }
         }
@@ -2387,6 +2414,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2417,7 +2449,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

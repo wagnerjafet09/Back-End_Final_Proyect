@@ -1,3 +1,5 @@
+using Biblioteca.BL.Contract;
+using Biblioteca.BL.Services;
 using Biblioteca.DAL.Context;
 using Biblioteca.DAL.Interfaces;
 using Biblioteca.DAL.Repositories;
@@ -16,6 +18,12 @@ builder.Services.AddDbContext<BibliotecaContext>(options => options.UseSqlServer
 
 //Repositories
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<ILibroRepository, LibroRepository>();
+builder.Services.AddTransient<IPrestamoRepository, PrestamoRepository>();
+//Services
+builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<ILibroService, LibroService>();
+builder.Services.AddTransient<IPrestamoService, PrestamoService>();
 
 var app = builder.Build();
 

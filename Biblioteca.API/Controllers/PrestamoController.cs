@@ -54,5 +54,18 @@ namespace Biblioteca.API.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost("VencimientoPrestamo")]
+        public async Task<IActionResult> Post(VencimientoPrestamoDto vencimientoPrestamoDto)
+        {
+            if (vencimientoPrestamoDto != null)
+            {
+                var result = await this.prestamoService.VencimientoPrestamo(vencimientoPrestamoDto);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

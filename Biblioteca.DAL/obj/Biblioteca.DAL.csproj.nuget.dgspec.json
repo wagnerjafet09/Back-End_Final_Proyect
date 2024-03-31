@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {}
+    "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {}
   },
   "projects": {
-    "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {
+    "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj",
+        "projectUniqueName": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj",
         "projectName": "Biblioteca.DAL",
-        "projectPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\Biblioteca.DAL.csproj",
-        "packagesPath": "C:\\Users\\MSI GL65\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\Biblioteca\\Back-End_Final_Proyect\\Biblioteca.DAL\\obj\\",
+        "projectPath": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\Biblioteca.DAL.csproj",
+        "packagesPath": "C:\\Users\\waner\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\Biblioteca\\Bibioteca\\Biblioteca.DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\MSI GL65\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\waner\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -74,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -20,16 +20,15 @@ namespace Biblioteca.DAL.Repositories
         public async Task<bool> GestionPrestamo(Prestamo prestamo)
         {
 
-            InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);
             try
             {
-                if (inventario.CantidadDisponible > 0)
+                if (prestamo != null)
                 {
-                    inventario.CantidadFuera += 1;
-                    inventario.CantidadDisponible -= 1;
+/*                    inventario.CantidadFuera += 1;
+                    inventario.CantidadDisponible -= 1;*/
                     prestamo.FechaHoraPrestamo = DateTime.Now;
                     prestamo.FechaHoraDevolucion = DateTime.Now.AddDays(30);
-                    prestamo.Estado = "Prestado";
+                    prestamo.Estado = "Activo";
                     await context.Prestamos.AddAsync(prestamo);
                     await this.SaveChanges();
                     return true;
@@ -56,8 +55,8 @@ namespace Biblioteca.DAL.Repositories
             {
                 if (inventarioLibro.CantidadFuera > 0 && prestamoExistente.Estado == "Prestado")
                 {
-                    inventarioLibro.CantidadDisponible += 1;
-                    inventarioLibro.CantidadFuera -= 1;
+/*                    inventarioLibro.CantidadDisponible += 1;
+                    inventarioLibro.CantidadFuera -= 1;*/
                     prestamoExistente.Estado = "Devuelto";
                     await base.SaveChanges();
                     return true;
@@ -100,6 +99,33 @@ namespace Biblioteca.DAL.Repositories
                 logger.LogError($"Ocurrio un error Obteniendo el Prestamo {ex.Message}");
             }
             return prestamo;
+        }
+
+        public async Task<bool> VencimientoPrestamo(Prestamo prestamo)
+        {
+            try
+            {
+                /*InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);*/
+                var prestamoExistente = context.Prestamos.First(p => p.ID == prestamo.ID);
+
+
+                if (DateTime.Now >= prestamoExistente.FechaHoraDevolucion)
+                {
+                    prestamoExistente.Estado = "Vencido";
+                    /*context.Prestamos.Update(prestamoExistente);*/
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrió un error al procesar el vencimiento del prestamo: {ex.Message}");
+                return false;
+            }
         }
     }
 }

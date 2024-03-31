@@ -67,6 +67,30 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
+        public async Task<ServiceResult> VencimientoPrestamo(VencimientoPrestamoDto prestamoDto)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                if (await prestamoRepository.VencimientoPrestamo(prestamoDto.ConvertVencimientoPrestamoDtoToEntity()))
+                {
+                    result.Success = true;
+                    result.Message = "Estado del prestamo actualizado correctamente ✅";
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Ocurrio un error en en el proceso de actualizacion de estado del prestamo 👾👾";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error en en el proceso de actualizacion de estado del prestamo";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
 
         public async Task<ServiceResult> GetById(int id)
         {
@@ -102,6 +126,11 @@ namespace Biblioteca.BL.Services
                 logger.LogError(ex.Message);
             }
             return result;
+        }
+
+        public Task<ServiceResult> VencimeintoPrestamo(VencimientoPrestamoDto vencimientoPrestamoDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

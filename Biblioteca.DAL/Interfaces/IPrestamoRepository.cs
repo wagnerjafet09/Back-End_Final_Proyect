@@ -8,5 +8,6 @@ namespace Biblioteca.DAL.Interfaces
     {
         Task<bool> GestionPrestamo(Prestamo prestamo);
         Task<bool> DevolucionLibro(Prestamo prestamo);
+        Task<bool> VencimientoPrestamo(Prestamo prestamo);
     }
 }

@@ -20,10 +20,12 @@ builder.Services.AddDbContext<BibliotecaContext>(options => options.UseSqlServer
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<ILibroRepository, LibroRepository>();
 builder.Services.AddTransient<IPrestamoRepository, PrestamoRepository>();
+builder.Services.AddTransient<IReservaRepository, ReservaRepository>();
 //Services
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 builder.Services.AddTransient<ILibroService, LibroService>();
 builder.Services.AddTransient<IPrestamoService, PrestamoService>();
+builder.Services.AddTransient<IReservaService, ReservaService>();
 
 var app = builder.Build();
 

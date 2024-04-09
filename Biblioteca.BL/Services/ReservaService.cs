@@ -108,12 +108,12 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
-        public async Task<ServiceResult> ObtenerReservasConDetalle()
+        public async Task<ServiceResult> ObtenerReservasConDetalle(int usuarioId)
         {
             ServiceResult result = new ServiceResult();
             try
             {
-                result.Data = await this.reservaRepository.ObtenerReservasConDetalle();
+                result.Data = await this.reservaRepository.ObtenerReservasConDetalle(usuarioId);
                 result.Success = true;
                 result.Message = "Reservas con detalle encontradas exitosamente";
             }

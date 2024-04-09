@@ -13,6 +13,6 @@ namespace Biblioteca.DAL.Interfaces
     {
         Task<bool> NuevaReserva(Reserva reserva);
         Task<bool> VencimientoReserva(Reserva reserva);
-        Task<List<ReservaConDetalles>> ObtenerReservasConDetalle();
+        Task<List<ReservaConDetalles>> ObtenerReservasConDetalle(int usuarioId);
     }
 }

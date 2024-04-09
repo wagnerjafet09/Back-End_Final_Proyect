@@ -81,21 +81,25 @@ namespace Biblioteca.DAL.Repositories
             }
         }
 
-        public async Task<List<ReservaConDetalles>> ObtenerReservasConDetalle()
+        public async Task<List<ReservaConDetalles>> ObtenerReservasConDetalle(int usuarioId)
         {
             using (this.context)
             {
                 var reservasConDetalle = await context.Reservas
+                    .Where(reserva => reserva.IDUsuario == usuarioId && reserva.Estado == "Confirmada")
                     .Join(context.Libros,
                         reserva => reserva.IDLibro,
-                libro => libro.ID,
+                        libro => libro.ID,
                         (reserva, libro) => new ReservaConDetalles
                         {
-                            ID = reserva.ID,
+                            IDReserva = reserva.ID,
                             FechaHoraReserva = reserva.FechaHoraReserva,
                             Autor = libro.Autor,
                             Titulo = libro.Titulo,
-                            UrlImagen = libro.UrlImagen
+                            UrlImagen = libro.UrlImagen,
+                            IDLibro = reserva.IDLibro,
+                            IDUsuario = reserva.IDUsuario,
+                            Estado = reserva.Estado,
                         })
                     .ToListAsync();
 

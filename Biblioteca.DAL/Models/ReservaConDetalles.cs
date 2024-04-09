@@ -12,11 +12,11 @@ namespace Biblioteca.DAL.Models
         {
             this.FechaHoraReserva = DateTime.Now;
         }
-        public int ID { get; set; }
-/*        public int IDUsuario { get; set; }
-        public int IDLibro { get; set; }*/
+        public int IDReserva { get; set; }
+        public int IDUsuario { get; set; }
+        public int IDLibro { get; set; }
         public DateTime? FechaHoraReserva { get; set; }
-/*        public string? Estado { get; set; }*/
+        public string? Estado { get; set; }
         public string? Titulo { get; set; }
         public string? Autor { get; set; }
         public string? UrlImagen { get; set; }

@@ -2,6 +2,8 @@
 using Biblioteca.DAL.Core;
 using Biblioteca.DAL.Entities;
 using Biblioteca.DAL.Interfaces;
+using Biblioteca.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -79,6 +81,28 @@ namespace Biblioteca.DAL.Repositories
             }
         }
 
+        public async Task<List<ReservaConDetalles>> ObtenerReservasConDetalle()
+        {
+            using (this.context)
+            {
+                var reservasConDetalle = await context.Reservas
+                    .Join(context.Libros,
+                        reserva => reserva.IDLibro,
+                libro => libro.ID,
+                        (reserva, libro) => new ReservaConDetalles
+                        {
+                            ID = reserva.ID,
+                            FechaHoraReserva = reserva.FechaHoraReserva,
+                            Autor = libro.Autor,
+                            Titulo = libro.Titulo,
+                            UrlImagen = libro.UrlImagen
+                        })
+                    .ToListAsync();
+
+                return reservasConDetalle;
+            }
+        }
+
         public async Task<bool> VencimientoReserva(Reserva reserva)
         {
             try
@@ -111,5 +135,7 @@ namespace Biblioteca.DAL.Repositories
                 return false;
             }
         }
+
     }
 }
+

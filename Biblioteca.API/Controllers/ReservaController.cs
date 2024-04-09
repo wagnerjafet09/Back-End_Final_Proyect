@@ -15,10 +15,12 @@ namespace Biblioteca.API.Controllers
     public class ReservaController : ControllerBase
     {
         private readonly IReservaService reservaService;
+/*        private readonly IReservaRepository reservaRepository;*/
 
-        public ReservaController(IReservaService reservaService)
+        public ReservaController(IReservaService reservaService, IReservaRepository reservaRepository)
         {
             this.reservaService = reservaService;
+/*            this.reservaRepository = reservaRepository;*/
         }
         // GET: api/<ReservaController>
         [HttpGet]
@@ -62,6 +64,14 @@ namespace Biblioteca.API.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost("ReservaConDetalles")]
+        public async Task<IActionResult> GetReservasConDetalles()
+        {
+                var result = await this.reservaService.ObtenerReservasConDetalle();
+                return Ok(result);
+            
         }
     }
 }

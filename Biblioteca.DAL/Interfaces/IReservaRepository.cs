@@ -1,5 +1,6 @@
 ﻿using Biblioteca.DAL.Core;
 using Biblioteca.DAL.Entities;
+using Biblioteca.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Biblioteca.DAL.Interfaces
     {
         Task<bool> NuevaReserva(Reserva reserva);
         Task<bool> VencimientoReserva(Reserva reserva);
+        Task<List<ReservaConDetalles>> ObtenerReservasConDetalle();
     }
 }

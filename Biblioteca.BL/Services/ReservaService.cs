@@ -107,5 +107,23 @@ namespace Biblioteca.BL.Services
             }
             return result;
         }
+
+        public async Task<ServiceResult> ObtenerReservasConDetalle()
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Data = await this.reservaRepository.ObtenerReservasConDetalle();
+                result.Success = true;
+                result.Message = "Reservas con detalle encontradas exitosamente";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrió un error obteniendo las Reservas con detalle";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
     }
 }

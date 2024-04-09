@@ -11,5 +11,6 @@ namespace Biblioteca.BL.Contract
         Task<ServiceResult> GetByNameOrAuthor(string searchTerm);
         Task<ServiceResult> EliminarLibro(int id);
         Task<ServiceResult> RecomendarLibros(int UsuarioID);
+        Task<ServiceResult> LibrosReservados(int usuarioId);
     }
 }

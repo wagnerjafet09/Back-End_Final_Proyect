@@ -1,5 +1,6 @@
 ﻿using Biblioteca.BL.Contract;
 using Biblioteca.BL.Dto.Libro;
+using Biblioteca.DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,10 +12,12 @@ namespace Biblioteca.API.Controllers
     public class LibroController : ControllerBase
     {
         private readonly ILibroService libroService;
+/*        private readonly ILibroRepository libroRepository;*/
 
-        public LibroController(ILibroService libroService)
+        public LibroController(ILibroService libroService, ILibroRepository libroRepository)
         {
             this.libroService = libroService;
+/*            this.libroRepository = libroRepository;*/
         }
 
         [HttpGet]
@@ -63,6 +66,13 @@ namespace Biblioteca.API.Controllers
         public async Task<IActionResult> GetLibrosRecomendados(int UsuarioID) 
         {
             var result = await this.libroService.RecomendarLibros(UsuarioID);
+            return Ok(result);
+        }
+
+        [HttpGet("LibrosReservados")]
+        public async Task<IActionResult> GetLibrosReservados(int UsuarioID)
+        {
+            var result = await this.libroService.LibrosReservados(UsuarioID);
             return Ok(result);
         }
     }

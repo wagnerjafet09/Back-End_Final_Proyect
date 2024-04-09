@@ -118,5 +118,14 @@ namespace Biblioteca.DAL.Repositories
             return libros;
         }
 
+        public async Task<List<Libro>> LibrosReservados(int usuarioID)
+        {
+            var reservas = await context.Reservas
+                                    .Where(r => r.IDUsuario == usuarioID && r.Estado == "Confirmada")
+                                    .Select(r => r.IDLibro)
+                                    .ToListAsync();
+            var librosReservados = await context.Libros.Include(l => l.InvetarioLibro).Where(l => reservas.Contains(l.ID)).ToListAsync();
+            return librosReservados;
+        }
     }
 }

@@ -3,6 +3,8 @@ using Biblioteca.DAL.Context;
 using Biblioteca.DAL.Core;
 using Biblioteca.DAL.Entities;
 using Biblioteca.DAL.Interfaces;
+using Biblioteca.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Biblioteca.DAL.Repositories
@@ -127,5 +129,34 @@ namespace Biblioteca.DAL.Repositories
                 return false;
             }
         }
-    }
+        public async Task<List<PrestamoConDetalle>> ObtenerPrestamosConDetalle(int usuarioId)
+        {
+            using (this.context)
+            {
+                var prestamosConDetalle = await context.Prestamos
+                    .Where(prestamo => prestamo.IDUsuario == usuarioId && prestamo.Estado == "Activo")
+                    .Join(context.Libros,
+                        prestamo => prestamo.IDLibro,
+                        libro => libro.ID,
+                        (prestamo, libro) => new PrestamoConDetalle
+                        {
+                            IDPrestamo = prestamo.ID,
+                            IDUsuario = prestamo.IDUsuario,
+                            IDLibro = prestamo.IDLibro,
+                            FechaHoraPrestamo = prestamo.FechaHoraPrestamo,
+                            FechaHoraDevolucion = prestamo.FechaHoraDevolucion,
+                            Estado = prestamo.Estado,
+                            Titulo = libro.Titulo,
+                            Autor = libro.Autor,
+                            Genero = libro.Genero,
+                            Descripcion = libro.Descripcion,
+                            UrlImagen = libro.UrlImagen,
+                            Eliminado = libro.Eliminado
+                        })
+                    .ToListAsync();
+
+                return prestamosConDetalle;
+            }
+        }
+        }
 }

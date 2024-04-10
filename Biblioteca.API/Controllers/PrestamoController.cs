@@ -1,5 +1,6 @@
 ﻿using Biblioteca.BL.Contract;
 using Biblioteca.BL.Dto.Prestamo;
+using Biblioteca.DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,10 +12,12 @@ namespace Biblioteca.API.Controllers
     public class PrestamoController : ControllerBase
     {
         private readonly IPrestamoService prestamoService;
+        private readonly IPrestamoRepository prestamoRepository;
 
-        public PrestamoController(IPrestamoService prestamoService)
+        public PrestamoController(IPrestamoService prestamoService, IPrestamoRepository prestamoRepository)
         {
             this.prestamoService = prestamoService;
+            this.prestamoRepository = prestamoRepository;
         }
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -67,5 +70,12 @@ namespace Biblioteca.API.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost("PrestamosConDetalle")]
+        public async Task<IActionResult> Post(int usuarioId)
+        {
+            var result = await this.prestamoService.ObtenerPrestamosConDetalle(usuarioId);
+            return Ok(result);
+        }
+
     }
 }

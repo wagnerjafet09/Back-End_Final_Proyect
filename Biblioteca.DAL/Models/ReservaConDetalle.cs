@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.DAL.Models
 {
-    public class ReservaConDetalles
+    public class ReservaConDetalle
     {
-        public ReservaConDetalles()
+        public ReservaConDetalle()
         {
             this.FechaHoraReserva = DateTime.Now;
         }

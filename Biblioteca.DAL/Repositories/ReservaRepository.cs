@@ -81,30 +81,31 @@ namespace Biblioteca.DAL.Repositories
             }
         }
 
-        public async Task<List<ReservaConDetalles>> ObtenerReservasConDetalle(int usuarioId)
+        public async Task<List<ReservaConDetalle>> ObtenerReservasConDetalle(int usuarioId)
         {
             using (this.context)
             {
                 var reservasConDetalle = await context.Reservas
-                    .Where(reserva => reserva.IDUsuario == usuarioId && reserva.Estado == "Confirmada")
-                    .Join(context.Libros,
-                        reserva => reserva.IDLibro,
-                        libro => libro.ID,
-                        (reserva, libro) => new ReservaConDetalles
-                        {
-                            IDReserva = reserva.ID,
-                            FechaHoraReserva = reserva.FechaHoraReserva,
-                            Autor = libro.Autor,
-                            Titulo = libro.Titulo,
-                            UrlImagen = libro.UrlImagen,
-                            IDLibro = reserva.IDLibro,
-                            IDUsuario = reserva.IDUsuario,
-                            Estado = reserva.Estado,
-                        })
-                    .ToListAsync();
+                                    .Where(reserva => reserva.IDUsuario == usuarioId && reserva.Estado == "Confirmada")
+                                    .Join(context.Libros,
+                                        reserva => reserva.IDLibro,
+                                        libro => libro.ID,
+                                        (reserva, libro) => new ReservaConDetalle
+                                        {
+                                            IDReserva = reserva.ID,
+                                            FechaHoraReserva = reserva.FechaHoraReserva,
+                                            Autor = libro.Autor,
+                                            Titulo = libro.Titulo,
+                                            UrlImagen = libro.UrlImagen,
+                                            IDLibro = reserva.IDLibro,
+                                            IDUsuario = reserva.IDUsuario,
+                                            Estado = reserva.Estado,
+                                        })
+                                    .ToListAsync();
 
                 return reservasConDetalle;
             }
+            
         }
 
         public async Task<bool> VencimientoReserva(Reserva reserva)

@@ -66,7 +66,7 @@ namespace Biblioteca.API.Controllers
             }
         }
 
-        [HttpPost("ReservaConDetalles")]
+        [HttpGet("ReservasConDetalle/{usuarioId}")]
         public async Task<IActionResult> GetReservasConDetalles(int usuarioId)
         {
                 var result = await this.reservaService.ObtenerReservasConDetalle(usuarioId);

@@ -128,9 +128,22 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
-        public Task<ServiceResult> VencimeintoPrestamo(VencimientoPrestamoDto vencimientoPrestamoDto)
+        public async Task<ServiceResult> ObtenerPrestamosConDetalle(int usuarioId)
         {
-            throw new NotImplementedException();
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Data = await this.prestamoRepository.ObtenerPrestamosConDetalle(usuarioId);
+                result.Success = true;
+                result.Message = "Prestamos con detalle Encontrados Exitosamente";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error Obteniendo los Prestamos con detalle";
+                logger.LogError(ex.Message);
+            }
+            return result;
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Biblioteca.DAL.Repositories
         public async Task<Usuario> LoginUsuario(Usuario loginRequest)
         {
             Usuario loginexitoso = new Usuario();
-            if (loginRequest.Nombre != null && loginRequest.Contraseña != null)
+            if (loginRequest.NombreUsuario != null && loginRequest.Contraseña != null)
             {
                 var usuarios = await context.Usuarios.FirstOrDefaultAsync(U => U.NombreUsuario == loginRequest.NombreUsuario && U.Contraseña == loginRequest.Contraseña);
 

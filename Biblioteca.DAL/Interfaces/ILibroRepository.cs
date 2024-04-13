@@ -11,5 +11,6 @@ namespace Biblioteca.DAL.Interfaces
         Task EliminarLibro(int libroID);
         Task<List<Libro>> GetByNameOrAuthor(string searchTerm);
         Task<List<Libro>> RecomendarLibros(int usuarioID);
+        Task<List<Libro>> LibrosReservados(int usuarioID);
     }
 }

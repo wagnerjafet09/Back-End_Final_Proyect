@@ -3,6 +3,8 @@ using Biblioteca.DAL.Context;
 using Biblioteca.DAL.Core;
 using Biblioteca.DAL.Entities;
 using Biblioteca.DAL.Interfaces;
+using Biblioteca.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Biblioteca.DAL.Repositories
@@ -19,17 +21,19 @@ namespace Biblioteca.DAL.Repositories
         }
         public async Task<bool> GestionPrestamo(Prestamo prestamo)
         {
+            Reserva reservaEliminar = context.Reservas.First(r => r.IDLibro == prestamo.IDLibro && r.IDUsuario == prestamo.IDUsuario);
+            bool prestamoExistente = context.Prestamos.Any(p => p.IDUsuario == prestamo.IDUsuario && p.IDLibro == prestamo.IDLibro && p.Estado == "Activo");
 
-            InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);
             try
             {
-                if (inventario.CantidadDisponible > 0)
+                if (prestamoExistente == false && prestamo != null)
                 {
-                    inventario.CantidadFuera += 1;
-                    inventario.CantidadDisponible -= 1;
+/*                    inventario.CantidadFuera += 1;
+                    inventario.CantidadDisponible -= 1;*/
                     prestamo.FechaHoraPrestamo = DateTime.Now;
                     prestamo.FechaHoraDevolucion = DateTime.Now.AddDays(30);
-                    prestamo.Estado = "Prestado";
+                    prestamo.Estado = "Activo";
+                    reservaEliminar.Estado = "Retirada";
                     await context.Prestamos.AddAsync(prestamo);
                     await this.SaveChanges();
                     return true;
@@ -50,14 +54,14 @@ namespace Biblioteca.DAL.Repositories
         {
 
             InventarioLibro inventarioLibro = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);
-            Prestamo prestamoExistente = context.Prestamos.First(e => e.IDLibro == prestamo.IDLibro && e.Estado == "Prestado");
+            Prestamo prestamoExistente = context.Prestamos.First(e => e.IDLibro == prestamo.IDLibro && e.Estado == "Activo");
 
             try
             {
-                if (inventarioLibro.CantidadFuera > 0 && prestamoExistente.Estado == "Prestado")
+                if (inventarioLibro.CantidadFuera > 0 && prestamoExistente.Estado == "Activo")
                 {
-                    inventarioLibro.CantidadDisponible += 1;
-                    inventarioLibro.CantidadFuera -= 1;
+/*                    inventarioLibro.CantidadDisponible += 1;
+                    inventarioLibro.CantidadFuera -= 1;*/
                     prestamoExistente.Estado = "Devuelto";
                     await base.SaveChanges();
                     return true;
@@ -101,5 +105,61 @@ namespace Biblioteca.DAL.Repositories
             }
             return prestamo;
         }
-    }
+
+        public async Task<bool> VencimientoPrestamo(Prestamo prestamo)
+        {
+            try
+            {
+                /*InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);*/
+                var prestamoExistente = context.Prestamos.First(p => p.ID == prestamo.ID);
+
+
+                if (DateTime.Now >= prestamoExistente.FechaHoraDevolucion)
+                {
+                    prestamoExistente.Estado = "Vencido";
+                    /*context.Prestamos.Update(prestamoExistente);*/
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrió un error al procesar el vencimiento del prestamo: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<List<PrestamoConDetalle>> ObtenerPrestamosConDetalle(int usuarioId)
+        {
+            using (this.context)
+            {
+                var prestamosConDetalle = await context.Prestamos
+                    .Where(prestamo => prestamo.IDUsuario == usuarioId && prestamo.Estado == "Activo")
+                    .Join(context.Libros,
+                        prestamo => prestamo.IDLibro,
+                        libro => libro.ID,
+                        (prestamo, libro) => new PrestamoConDetalle
+                        {
+                            IDPrestamo = prestamo.ID,
+                            IDUsuario = prestamo.IDUsuario,
+                            IDLibro = prestamo.IDLibro,
+                            FechaHoraPrestamo = prestamo.FechaHoraPrestamo,
+                            FechaHoraDevolucion = prestamo.FechaHoraDevolucion,
+                            Estado = prestamo.Estado,
+                            Titulo = libro.Titulo,
+                            Autor = libro.Autor,
+                            Genero = libro.Genero,
+                            Descripcion = libro.Descripcion,
+                            UrlImagen = libro.UrlImagen,
+                            Eliminado = libro.Eliminado
+                        })
+                    .ToListAsync();
+
+                return prestamosConDetalle;
+            }
+        }
+        }
 }

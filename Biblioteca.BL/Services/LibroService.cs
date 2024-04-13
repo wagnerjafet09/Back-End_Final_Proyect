@@ -3,6 +3,7 @@ using Biblioteca.BL.Contract;
 using Biblioteca.BL.Core;
 using Biblioteca.BL.Dto.Libro;
 using Biblioteca.BL.Extentions.Libros;
+using Biblioteca.DAL.Entities;
 using Biblioteca.DAL.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -164,6 +165,23 @@ namespace Biblioteca.BL.Services
                 logger.LogError($"{result.Message}, {ex.Message}");
             }
 
+            return result;
+        }
+
+        public async Task<ServiceResult> LibrosReservados(int usuarioId)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Data = await this.libroRepository.LibrosReservados(usuarioId);
+                result.Success = true;
+                result.Message = "Libros Reservados encontrados Exitosamente ✅";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                logger.LogError($"Ocurrio un error obteniendo los Libros Reservados {ex.Message}");
+            }
             return result;
         }
 

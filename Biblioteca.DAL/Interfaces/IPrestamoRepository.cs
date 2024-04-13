@@ -1,6 +1,7 @@
 ﻿
 using Biblioteca.DAL.Core;
 using Biblioteca.DAL.Entities;
+using Biblioteca.DAL.Models;
 
 namespace Biblioteca.DAL.Interfaces
 {
@@ -8,5 +9,7 @@ namespace Biblioteca.DAL.Interfaces
     {
         Task<bool> GestionPrestamo(Prestamo prestamo);
         Task<bool> DevolucionLibro(Prestamo prestamo);
+        Task<bool> VencimientoPrestamo(Prestamo prestamo);
+        Task<List<PrestamoConDetalle>> ObtenerPrestamosConDetalle(int usuarioId);
     }
 }

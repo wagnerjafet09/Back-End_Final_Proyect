@@ -67,6 +67,30 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
+        public async Task<ServiceResult> VencimientoPrestamo(VencimientoPrestamoDto prestamoDto)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                if (await prestamoRepository.VencimientoPrestamo(prestamoDto.ConvertVencimientoPrestamoDtoToEntity()))
+                {
+                    result.Success = true;
+                    result.Message = "Estado del prestamo actualizado correctamente ✅";
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Ocurrio un error en en el proceso de actualizacion de estado del prestamo 👾👾";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error en en el proceso de actualizacion de estado del prestamo";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
 
         public async Task<ServiceResult> GetById(int id)
         {
@@ -99,6 +123,24 @@ namespace Biblioteca.BL.Services
             {
                 result.Success = false;
                 result.Message = "Ocurrio un error Obteniendo los Prestamos ";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
+
+        public async Task<ServiceResult> ObtenerPrestamosConDetalle(int usuarioId)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Data = await this.prestamoRepository.ObtenerPrestamosConDetalle(usuarioId);
+                result.Success = true;
+                result.Message = "Prestamos con detalle Encontrados Exitosamente";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error Obteniendo los Prestamos con detalle";
                 logger.LogError(ex.Message);
             }
             return result;

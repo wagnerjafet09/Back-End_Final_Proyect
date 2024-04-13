@@ -24,6 +24,23 @@ namespace Biblioteca.DAL.Repositories
             this.logger = logger;
         }
 
+        public async Task<bool> CancelarReserva(int reservaId)
+        {
+            Reserva reserva = new Reserva();
+            try
+            {
+                reserva = await this.context.Reservas.FirstAsync(r => r.ID == reservaId);
+                reserva.Estado = "Cancelada";
+                await SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrio un error obteniendo la Reserva a cancelar {ex.Message}");
+                return false;
+            }
+        }
+
         public async override Task<List<Reserva>> GetAll()
         {
             List<Reserva> reservas = new List<Reserva>();

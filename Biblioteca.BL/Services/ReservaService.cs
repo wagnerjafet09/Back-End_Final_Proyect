@@ -125,5 +125,23 @@ namespace Biblioteca.BL.Services
             }
             return result;
         }
+
+        public async Task<ServiceResult> CancelarReserva(int reservaId)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Data = await this.reservaRepository.CancelarReserva(reservaId);
+                result.Success = true;
+                result.Message = "Reserva cancelada exitosamente";
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrió un error cancelando la Reserva";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
     }
 }

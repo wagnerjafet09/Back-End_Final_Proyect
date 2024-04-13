@@ -14,5 +14,6 @@ namespace Biblioteca.BL.Contract
         Task<ServiceResult> NuevaReserva(NuevaReservaDto nuevaReservaDto);
         Task<ServiceResult> VencimientoReserva(VencimientoReservaDto vencimientoReservaDto);
         Task<ServiceResult> ObtenerReservasConDetalle(int usuarioId);
+        Task<ServiceResult> CancelarReserva(int usuarioId);
     }
 }

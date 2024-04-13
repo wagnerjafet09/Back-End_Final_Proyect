@@ -73,5 +73,12 @@ namespace Biblioteca.API.Controllers
                 return Ok(result);
             
         }
+        [HttpDelete("CancelarReserva/{reservaId}")]
+        public async Task<IActionResult> CancelarReserva(int reservaId)
+        {
+            var result = await this.reservaService.CancelarReserva(reservaId);
+            return Ok(result);
+
+        }
     }
 }

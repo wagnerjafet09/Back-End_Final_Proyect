@@ -70,7 +70,7 @@ namespace Biblioteca.API.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost("PrestamosConDetalle")]
+        [HttpGet("PrestamosConDetalle/{usuarioId}")]
         public async Task<IActionResult> Post(int usuarioId)
         {
             var result = await this.prestamoService.ObtenerPrestamosConDetalle(usuarioId);

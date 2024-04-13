@@ -21,16 +21,19 @@ namespace Biblioteca.DAL.Repositories
         }
         public async Task<bool> GestionPrestamo(Prestamo prestamo)
         {
+            Reserva reservaEliminar = context.Reservas.First(r => r.IDLibro == prestamo.IDLibro && r.IDUsuario == prestamo.IDUsuario);
+            bool prestamoExistente = context.Prestamos.Any(p => p.IDUsuario == prestamo.IDUsuario && p.IDLibro == prestamo.IDLibro && p.Estado == "Activo");
 
             try
             {
-                if (prestamo != null)
+                if (prestamoExistente == false && prestamo != null)
                 {
 /*                    inventario.CantidadFuera += 1;
                     inventario.CantidadDisponible -= 1;*/
                     prestamo.FechaHoraPrestamo = DateTime.Now;
                     prestamo.FechaHoraDevolucion = DateTime.Now.AddDays(30);
                     prestamo.Estado = "Activo";
+                    reservaEliminar.Estado = "Retirada";
                     await context.Prestamos.AddAsync(prestamo);
                     await this.SaveChanges();
                     return true;
@@ -51,11 +54,11 @@ namespace Biblioteca.DAL.Repositories
         {
 
             InventarioLibro inventarioLibro = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);
-            Prestamo prestamoExistente = context.Prestamos.First(e => e.IDLibro == prestamo.IDLibro && e.Estado == "Prestado");
+            Prestamo prestamoExistente = context.Prestamos.First(e => e.IDLibro == prestamo.IDLibro && e.Estado == "Activo");
 
             try
             {
-                if (inventarioLibro.CantidadFuera > 0 && prestamoExistente.Estado == "Prestado")
+                if (inventarioLibro.CantidadFuera > 0 && prestamoExistente.Estado == "Activo")
                 {
 /*                    inventarioLibro.CantidadDisponible += 1;
                     inventarioLibro.CantidadFuera -= 1;*/

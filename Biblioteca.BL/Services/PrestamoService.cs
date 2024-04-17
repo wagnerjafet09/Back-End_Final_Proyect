@@ -67,12 +67,12 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
-        public async Task<ServiceResult> VencimientoPrestamo(VencimientoPrestamoDto prestamoDto)
+        public async Task<ServiceResult> VencimientoPrestamo(int usuarioId)
         {
             ServiceResult result = new ServiceResult();
             try
             {
-                if (await prestamoRepository.VencimientoPrestamo(prestamoDto.ConvertVencimientoPrestamoDtoToEntity()))
+                if (await prestamoRepository.VencimientoPrestamo(usuarioId))
                 {
                     result.Success = true;
                     result.Message = "Estado del prestamo actualizado correctamente ✅";

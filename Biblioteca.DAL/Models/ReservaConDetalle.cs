@@ -17,6 +17,7 @@ namespace Biblioteca.DAL.Models
         public int IDLibro { get; set; }
         public DateTime? FechaHoraReserva { get; set; }
         public string? Estado { get; set; }
+        public string? CodigoAleatorio { get; set; }
         public string? Titulo { get; set; }
         public string? Autor { get; set; }
         public string? UrlImagen { get; set; }

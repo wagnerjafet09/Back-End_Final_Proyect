@@ -15,12 +15,12 @@ namespace Biblioteca.API.Controllers
     public class ReservaController : ControllerBase
     {
         private readonly IReservaService reservaService;
-/*        private readonly IReservaRepository reservaRepository;*/
+        private readonly IReservaRepository reservaRepository;
 
         public ReservaController(IReservaService reservaService, IReservaRepository reservaRepository)
         {
             this.reservaService = reservaService;
-/*            this.reservaRepository = reservaRepository;*/
+            this.reservaRepository = reservaRepository;
         }
         // GET: api/<ReservaController>
         [HttpGet]
@@ -79,6 +79,19 @@ namespace Biblioteca.API.Controllers
             var result = await this.reservaService.CancelarReserva(reservaId);
             return Ok(result);
 
+        }
+        [HttpPost("ActualizarCodigoAleatorio")]
+        public async Task<IActionResult> ActualizarCodigoAleatorio(ActualizarCodigoAleatorioDto reserva)
+        {
+            if (reserva != null)
+            {
+                var result = await this.reservaService.ActualizarCodigoAleatorio(reserva);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -143,5 +143,23 @@ namespace Biblioteca.BL.Services
             }
             return result;
         }
+
+        public async Task<ServiceResult> ActualizarCodigoAleatorio(ActualizarCodigoAleatorioDto actualizarCodigoDto)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Success = true;
+                result.Message = "El codigo aleatorio de la reserva fue actualizado con exito ✅";
+                result.Data = await reservaRepository.ActualizarCodigoAleatorio(actualizarCodigoDto.ConvertActualizarCodigoAleatorioDtoToEntity());
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error al intentar actualizar el codigo de la Reserva";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
     }
 }

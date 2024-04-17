@@ -27,5 +27,14 @@ namespace Biblioteca.BL.Extentions.Reservas
                 IDLibro = vencimientoReservaDto.IDLibro
             };
         }
+        public static Reserva ConvertActualizarCodigoAleatorioDtoToEntity(this ActualizarCodigoAleatorioDto actualizarCodigoAleatorioDto)
+        {
+            return new Reserva()
+            {
+                IDUsuario = actualizarCodigoAleatorioDto.IDUsuario,
+                IDLibro = actualizarCodigoAleatorioDto.IDLibro,
+                CodigoAleatorio = actualizarCodigoAleatorioDto.CodigoAleatorio
+            };
+        }
     }
 }

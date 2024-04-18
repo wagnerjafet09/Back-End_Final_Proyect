@@ -48,12 +48,12 @@ namespace Biblioteca.BL.Services
             return result;
         }
 
-        public async Task<ServiceResult> VencimientoReserva(VencimientoReservaDto vencimientoReservaDto)
+        public async Task<ServiceResult> VencimientoReserva(int usuarioId)
         {
             ServiceResult result = new ServiceResult();
             try
             {
-                if (await reservaRepository.VencimientoReserva(vencimientoReservaDto.ConvertVencimientoReservaDtoToEntity()))
+                if (await reservaRepository.VencimientoReserva(usuarioId))
                 {
                     result.Success = true;
                     result.Message = "El estado de la reserva fue actualizado con exito ✅";

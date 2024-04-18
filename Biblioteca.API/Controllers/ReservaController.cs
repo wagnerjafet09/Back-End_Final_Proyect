@@ -38,18 +38,11 @@ namespace Biblioteca.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("VenciminetoReserva")]
-        public async Task<IActionResult> Post(VencimientoReservaDto reserva)
+        [HttpPost("VenciminetoReserva/{usuarioId}")]
+        public async Task<IActionResult> Post(int usuarioId)
         {
-            if (reserva != null)
-            {
-                var result = await this.reservaService.VencimientoReserva(reserva);
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var result = await this.reservaService.VencimientoReserva(usuarioId);
+            return Ok(result);
         }
 
         [HttpPost("NuevaReserva")]

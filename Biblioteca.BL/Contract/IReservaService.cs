@@ -12,7 +12,7 @@ namespace Biblioteca.BL.Contract
     public interface IReservaService : IBaseService
     {
         Task<ServiceResult> NuevaReserva(NuevaReservaDto nuevaReservaDto);
-        Task<ServiceResult> VencimientoReserva(VencimientoReservaDto vencimientoReservaDto);
+        Task<ServiceResult> VencimientoReserva(int usuarioId);
         Task<ServiceResult> ActualizarCodigoAleatorio(ActualizarCodigoAleatorioDto actualizarCodigoDto);
         Task<ServiceResult> ObtenerReservasConDetalle(int usuarioId);
         Task<ServiceResult> CancelarReserva(int usuarioId);

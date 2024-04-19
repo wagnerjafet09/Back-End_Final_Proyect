@@ -22,12 +22,5 @@ namespace Biblioteca.BL.Extentions.Prestamos
                 IDLibro = devolucionDto.IDLibro
             };
         }
-        public static Prestamo ConvertVencimientoPrestamoDtoToEntity(this VencimientoPrestamoDto vencimientoDto)
-        {
-            return new Prestamo()
-            {
-                ID = vencimientoDto.ID
-            };
-        }
     }
 }

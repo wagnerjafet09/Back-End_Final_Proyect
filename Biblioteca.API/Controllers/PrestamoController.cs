@@ -12,12 +12,12 @@ namespace Biblioteca.API.Controllers
     public class PrestamoController : ControllerBase
     {
         private readonly IPrestamoService prestamoService;
-        private readonly IPrestamoRepository prestamoRepository;
+/*        private readonly IPrestamoRepository prestamoRepository;*/
 
         public PrestamoController(IPrestamoService prestamoService, IPrestamoRepository prestamoRepository)
         {
             this.prestamoService = prestamoService;
-            this.prestamoRepository = prestamoRepository;
+/*            this.prestamoRepository = prestamoRepository;*/
         }
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -57,18 +57,11 @@ namespace Biblioteca.API.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost("VencimientoPrestamo")]
-        public async Task<IActionResult> Post(VencimientoPrestamoDto vencimientoPrestamoDto)
+        [HttpPost("VencimientoPrestamo/{usuarioId}")]
+        public async Task<IActionResult> VencimientoPrestamo(int usuarioId)
         {
-            if (vencimientoPrestamoDto != null)
-            {
-                var result = await this.prestamoService.VencimientoPrestamo(vencimientoPrestamoDto);
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var result = await this.prestamoService.VencimientoPrestamo(usuarioId);
+            return Ok(result);
         }
         [HttpGet("PrestamosConDetalle/{usuarioId}")]
         public async Task<IActionResult> Post(int usuarioId)

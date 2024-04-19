@@ -12,5 +12,6 @@ namespace Biblioteca.DAL.Entities
         public int IDLibro { get; set; }
         public DateTime? FechaHoraReserva { get; set; }
         public string? Estado {  get; set; }
+        public string? CodigoAleatorio {  get; set; }
     }
 }

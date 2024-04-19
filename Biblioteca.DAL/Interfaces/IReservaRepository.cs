@@ -12,8 +12,9 @@ namespace Biblioteca.DAL.Interfaces
     public interface IReservaRepository : IBaseRepository<Reserva>
     {
         Task<bool> NuevaReserva(Reserva reserva);
-        Task<bool> VencimientoReserva(Reserva reserva);
+        Task<bool> VencimientoReserva(int usuarioId);
         Task<bool> CancelarReserva(int reservaId);
+        Task<string> ActualizarCodigoAleatorio(Reserva codigo);
         Task<List<ReservaConDetalle>> ObtenerReservasConDetalle(int usuarioId);
     }
 }

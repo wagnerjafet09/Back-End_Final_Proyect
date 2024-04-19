@@ -15,12 +15,12 @@ namespace Biblioteca.API.Controllers
     public class ReservaController : ControllerBase
     {
         private readonly IReservaService reservaService;
-/*        private readonly IReservaRepository reservaRepository;*/
+        private readonly IReservaRepository reservaRepository;
 
         public ReservaController(IReservaService reservaService, IReservaRepository reservaRepository)
         {
             this.reservaService = reservaService;
-/*            this.reservaRepository = reservaRepository;*/
+            this.reservaRepository = reservaRepository;
         }
         // GET: api/<ReservaController>
         [HttpGet]
@@ -38,18 +38,11 @@ namespace Biblioteca.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("VenciminetoReserva")]
-        public async Task<IActionResult> Post(VencimientoReservaDto reserva)
+        [HttpPost("VenciminetoReserva/{usuarioId}")]
+        public async Task<IActionResult> Post(int usuarioId)
         {
-            if (reserva != null)
-            {
-                var result = await this.reservaService.VencimientoReserva(reserva);
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var result = await this.reservaService.VencimientoReserva(usuarioId);
+            return Ok(result);
         }
 
         [HttpPost("NuevaReserva")]
@@ -79,6 +72,19 @@ namespace Biblioteca.API.Controllers
             var result = await this.reservaService.CancelarReserva(reservaId);
             return Ok(result);
 
+        }
+        [HttpPost("ActualizarCodigoAleatorio")]
+        public async Task<IActionResult> ActualizarCodigoAleatorio(ActualizarCodigoAleatorioDto reserva)
+        {
+            if (reserva != null)
+            {
+                var result = await this.reservaService.ActualizarCodigoAleatorio(reserva);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

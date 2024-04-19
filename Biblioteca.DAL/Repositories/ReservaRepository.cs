@@ -24,6 +24,23 @@ namespace Biblioteca.DAL.Repositories
             this.logger = logger;
         }
 
+        public async Task<string> ActualizarCodigoAleatorio(Reserva reserva)
+        {
+            Reserva reservaExistente = new Reserva();
+            try
+            {
+                reservaExistente = await this.context.Reservas.FirstAsync(r => r.IDUsuario == reserva.IDUsuario && r.IDLibro == reserva.IDLibro && r.Estado == "Confirmada");
+                reservaExistente.CodigoAleatorio = reserva.CodigoAleatorio;
+                await SaveChanges();
+                return reservaExistente.CodigoAleatorio;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrio un error actualizando el codigo aleatorio {ex.Message}");
+                return reservaExistente.CodigoAleatorio;
+            }
+        }
+
         public async Task<bool> CancelarReserva(int reservaId)
         {
             Reserva reserva = new Reserva();
@@ -71,7 +88,7 @@ namespace Biblioteca.DAL.Repositories
         {
             InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == reserva.IDLibro);
             // Verificar si el usuario ya tiene una reserva activa para el mismo libro
-            bool reservaExistente = context.Reservas.Any(r => r.IDUsuario == reserva.IDUsuario && r.IDLibro == reserva.IDLibro && r.Estado == "Confirmada");
+            bool reservaExistente = context.Reservas.Any(r => r.IDUsuario == reserva.IDUsuario && r.IDLibro == reserva.IDLibro && (r.Estado == "Confirmada" || r.Estado == "Retirada"));
             try
             {
                 if (reservaExistente == false && inventario.CantidadDisponible > 0)
@@ -100,6 +117,7 @@ namespace Biblioteca.DAL.Repositories
 
         public async Task<List<ReservaConDetalle>> ObtenerReservasConDetalle(int usuarioId)
         {
+            await this.VencimientoReserva(usuarioId);
             using (this.context)
             {
                 var reservasConDetalle = await context.Reservas
@@ -117,6 +135,7 @@ namespace Biblioteca.DAL.Repositories
                                             IDLibro = reserva.IDLibro,
                                             IDUsuario = reserva.IDUsuario,
                                             Estado = reserva.Estado,
+                                            CodigoAleatorio = reserva.CodigoAleatorio,
                                         })
                                     .ToListAsync();
 
@@ -125,31 +144,35 @@ namespace Biblioteca.DAL.Repositories
             
         }
 
-        public async Task<bool> VencimientoReserva(Reserva reserva)
+        public async Task<bool> VencimientoReserva(int idUsuario)
         {
             try
             {
-                InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == reserva.IDLibro);
-                var reservaExistente = context.Reservas.First(r => r.ID == reserva.ID);
-                // Calcular la diferencia de días entre la fecha de reserva y la fecha actual
-                /*TimeSpan? diasTranscurridos = DateTime.Now - reserva.FechaHoraReserva;
-                int diasTranscurridosInt = (int)diasTranscurridos?.TotalDays;*/
-                TimeSpan? diasTranscurridos = DateTime.Now - reservaExistente.FechaHoraReserva;
-                int diasTranscurridosInt = diasTranscurridos.HasValue ? (int)diasTranscurridos.Value.TotalDays : 0;
+                /*InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == reserva.IDLibro);*/
+                var reservasUsuario = await context.Reservas.Where(r => r.IDUsuario == idUsuario && r.Estado != "Retirada" && r.Estado != "Cancelada").ToListAsync();
 
-                if (diasTranscurridosInt >= 30) // Cancelar la reserva si han pasado más de 30 días
+                foreach (var reserva in reservasUsuario)
                 {
-                    inventario.CantidadFuera -= 1;
-                    inventario.CantidadDisponible += 1;
-                    reservaExistente.Estado = "Vencida";
-/*                    context.Reservas.Update(reserva);*/
-                    await context.SaveChangesAsync(); // Guardar el cambio de estado de la reserva
-                    return true;
+                    // Calcular la diferencia de días entre la fecha de reserva y la fecha actual
+
+                    TimeSpan? diasTranscurridos = DateTime.Now - reserva.FechaHoraReserva;
+                    int diasTranscurridosInt = diasTranscurridos.HasValue ? (int)diasTranscurridos.Value.TotalDays : 0;
+
+                    if (diasTranscurridosInt >= 30) // Cancelar la reserva si han pasado más de 30 días
+                    {
+                        InventarioLibro inventario = context.InventarioLibros.First(i => i.LibroID == reserva.IDLibro);
+
+                        inventario.CantidadFuera -= 1;
+                        inventario.CantidadDisponible += 1;
+                        reserva.Estado = "Vencida";
+                        /*context.Reservas.Update(reserva);*/
+                    }
+
+
                 }
-                else
-                {
-                    return false; // La reserva no ha vencido aún
-                }
+                
+                await context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {

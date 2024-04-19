@@ -47,7 +47,8 @@ namespace Biblioteca.DAL.Repositories
             try
             {
                 reserva = await this.context.Reservas.FirstAsync(r => r.ID == reservaId);
-                reserva.Estado = "Cancelada";
+                /*reserva.Estado = "Cancelada";*/
+                this.context.Reservas.Remove( reserva );
                 await SaveChanges();
                 return true;
             }

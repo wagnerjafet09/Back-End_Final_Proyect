@@ -4,6 +4,7 @@ using Biblioteca.BL.Core;
 using Biblioteca.BL.Dto.Prestamo;
 using Biblioteca.BL.Extentions.Prestamos;
 using Biblioteca.DAL.Interfaces;
+using Biblioteca.DAL.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Biblioteca.BL.Services
@@ -141,6 +142,23 @@ namespace Biblioteca.BL.Services
             {
                 result.Success = false;
                 result.Message = "Ocurrio un error Obteniendo los Prestamos con detalle";
+                logger.LogError(ex.Message);
+            }
+            return result;
+        }
+        public async Task<ServiceResult> ActualizarCodigoAleatorio(ActualizarCodigoDto actualizarCodigoDto)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                result.Success = true;
+                result.Message = "El codigo aleatorio de la reserva fue actualizado con exito ✅";
+                result.Data = await prestamoRepository.ActualizarCodigoAleatorio(actualizarCodigoDto.ConvertActualizarCodigoAleatorioDtoToEntity());
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Ocurrio un error al intentar actualizar el codigo de la Reserva";
                 logger.LogError(ex.Message);
             }
             return result;

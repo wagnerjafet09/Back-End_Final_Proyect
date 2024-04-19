@@ -1,5 +1,4 @@
 ﻿using Biblioteca.BL.Core;
-using Biblioteca.BL.Dto.Prestamo;
 using Biblioteca.BL.Dto.Reserva;
 using System;
 using System.Collections.Generic;

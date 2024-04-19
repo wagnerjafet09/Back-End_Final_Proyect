@@ -8,6 +8,7 @@ namespace Biblioteca.BL.Contract
     {
         Task<ServiceResult> GestionPrestamo(PrestamoGestionDto prestamoGestionDto);
         Task<ServiceResult> DevolucionLibro(PrestamoDevolucionDto prestamoDto);
+        Task<ServiceResult> ActualizarCodigoAleatorio(ActualizarCodigoDto actualizarCodigoDto);
         Task<ServiceResult> VencimientoPrestamo(int usuarioId);
         Task<ServiceResult> ObtenerPrestamosConDetalle(int usuarioId);
     }

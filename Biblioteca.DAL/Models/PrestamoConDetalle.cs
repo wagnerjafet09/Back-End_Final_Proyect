@@ -15,6 +15,7 @@ namespace Biblioteca.DAL.Models
         public DateTime? FechaHoraPrestamo { get; set; }
         public DateTime? FechaHoraDevolucion { get; set; }
         public string? Estado { get; set; }
+        public string? CodigoAleatorio { get; set; }
         public string? Titulo { get; set; }
         public string? Autor { get; set; }
         public string? Genero { get; set; }

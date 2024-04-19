@@ -55,6 +55,7 @@ namespace Biblioteca.DAL.Repositories
 
             InventarioLibro inventarioLibro = context.InventarioLibros.First(i => i.LibroID == prestamo.IDLibro);
             Prestamo prestamoExistente = context.Prestamos.First(e => e.IDLibro == prestamo.IDLibro && e.Estado == "Activo");
+            Reserva reserva = context.Reservas.First(r => r.IDLibro == prestamo.IDLibro && r.IDUsuario == prestamo.IDUsuario);
 
             try
             {
@@ -63,6 +64,8 @@ namespace Biblioteca.DAL.Repositories
                     inventarioLibro.CantidadDisponible += 1;
                     inventarioLibro.CantidadFuera -= 1;
                     prestamoExistente.Estado = "Devuelto";
+                    /*reserva.Estado = "Devuelta";*/
+                    this.context.Reservas.Remove(reserva);
                     await base.SaveChanges();
                     return true;
                 }
@@ -145,6 +148,7 @@ namespace Biblioteca.DAL.Repositories
                             FechaHoraPrestamo = prestamo.FechaHoraPrestamo,
                             FechaHoraDevolucion = prestamo.FechaHoraDevolucion,
                             Estado = prestamo.Estado,
+                            CodigoAleatorio = prestamo.CodigoAleatorio,
                             Titulo = libro.Titulo,
                             Autor = libro.Autor,
                             Genero = libro.Genero,
@@ -157,5 +161,22 @@ namespace Biblioteca.DAL.Repositories
                 return prestamosConDetalle;
             }
         }
+
+        public async Task<string> ActualizarCodigoAleatorio(Prestamo prestamo)
+        {
+            Prestamo prestamoExistente = new Prestamo();
+            try
+            {
+                prestamoExistente = await this.context.Prestamos.FirstAsync(r => r.IDUsuario == prestamo.IDUsuario && r.IDLibro == prestamo.IDLibro && r.Estado == "Activo");
+                prestamoExistente.CodigoAleatorio = prestamo.CodigoAleatorio;
+                await SaveChanges();
+                return prestamoExistente.CodigoAleatorio;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ocurrio un error actualizando el codigo aleatorio {ex.Message}");
+                return prestamoExistente.CodigoAleatorio;
+            }
         }
+    }
 }

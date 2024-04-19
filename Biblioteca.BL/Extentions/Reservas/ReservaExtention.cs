@@ -1,5 +1,4 @@
-﻿using Biblioteca.BL.Dto.Prestamo;
-using Biblioteca.BL.Dto.Reserva;
+﻿using Biblioteca.BL.Dto.Reserva;
 using Biblioteca.DAL.Entities;
 using System;
 using System.Collections.Generic;

@@ -69,6 +69,18 @@ namespace Biblioteca.API.Controllers
             var result = await this.prestamoService.ObtenerPrestamosConDetalle(usuarioId);
             return Ok(result);
         }
-
+        [HttpPost("ActualizarCodigo")]
+        public async Task<IActionResult> ActualizarCodigo(ActualizarCodigoDto codigoAleatorioDto)
+        {
+            if (codigoAleatorioDto != null)
+            {
+                var result = await this.prestamoService.ActualizarCodigoAleatorio(codigoAleatorioDto);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

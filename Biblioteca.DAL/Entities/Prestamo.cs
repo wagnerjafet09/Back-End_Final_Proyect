@@ -9,6 +9,7 @@ namespace Biblioteca.DAL.Entities
         public DateTime? FechaHoraPrestamo { get; set; }
         public DateTime? FechaHoraDevolucion { get; set; }
         public string? Estado { get; set; }
+        public string? CodigoAleatorio { get; set; }
 
     }
 }

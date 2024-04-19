@@ -22,5 +22,14 @@ namespace Biblioteca.BL.Extentions.Prestamos
                 IDLibro = devolucionDto.IDLibro
             };
         }
+        public static Prestamo ConvertActualizarCodigoAleatorioDtoToEntity(this ActualizarCodigoDto actualizarCodigoAleatorioDto)
+        {
+            return new Prestamo()
+            {
+                IDUsuario = actualizarCodigoAleatorioDto.IDUsuario,
+                IDLibro = actualizarCodigoAleatorioDto.IDLibro,
+                CodigoAleatorio = actualizarCodigoAleatorioDto.CodigoAleatorio
+            };
+        }
     }
 }
